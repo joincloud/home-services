@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package time;
+
+
+message TimeSpan {
+    int64 start = 1;
+    int64 end = 2;
+}
