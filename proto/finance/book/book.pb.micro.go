@@ -6,9 +6,9 @@ package book
 import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/joincloud/home/proto/common/page"
-	response "github.com/joincloud/home/proto/common/response"
-	_ "github.com/joincloud/home/proto/common/time"
+	_ "github.com/joincloud/home-services/proto/common/page"
+	response "github.com/joincloud/home-services/proto/common/response"
+	_ "github.com/joincloud/home-services/proto/common/time"
 	math "math"
 )
 

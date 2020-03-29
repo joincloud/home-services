@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-import "github.com/joincloud/home/proto/common/response/response.proto";
-import "github.com/joincloud/home/proto/common/time/time.proto";
-import "github.com/joincloud/home/proto/common/page/page.proto";
+import "github.com/joincloud/home-services/proto/common/response/response.proto";
+import "github.com/joincloud/home-services/proto/common/time/time.proto";
+import "github.com/joincloud/home-services/proto/common/page/page.proto";
 
 service Book {
     rpc AddExpense (AddExpenseRequest) returns (response.Response) {

@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/joincloud/home-services/finance/book"
+	"github.com/joincloud/home-services/finance/book/handler"
+	bProto "github.com/joincloud/home-services/proto/finance/book"
 	"github.com/micro/cli/v2"
 	"github.com/micro/go-micro/v2"
-	"github.com/joincloud/home/finance/book"
-	"github.com/joincloud/home/finance/book/handler"
-	bProto "github.com/joincloud/home/proto/finance/book"
 )
 
 func main() {

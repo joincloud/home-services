@@ -1,3 +1,3 @@
-module github.com/joincloud/home/chat
+module github.com/joincloud/home-services/chat
 
 go 1.13

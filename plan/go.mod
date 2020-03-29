@@ -1,3 +1,3 @@
-module github.com/joincloud/home/plan
+module github.com/joincloud/home-services/plan
 
 go 1.13

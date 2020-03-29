@@ -1,4 +1,4 @@
-module github.com/joincloud/home/gateway
+module github.com/joincloud/home-services/gateway
 
 go 1.13
 

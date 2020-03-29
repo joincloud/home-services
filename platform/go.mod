@@ -1,3 +1,3 @@
-module github.com/joincloud/home/platform
+module github.com/joincloud/home-services/platform
 
 go 1.13

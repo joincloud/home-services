@@ -4,14 +4,14 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/joincloud/home-services/finance/book/repository"
+	"github.com/joincloud/home-services/proto/common/page"
+	"github.com/joincloud/home-services/proto/finance/book"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/joincloud/home/finance/book/repository"
-	"github.com/joincloud/home/proto/common/page"
-	"github.com/joincloud/home/proto/finance/book"
 )
 
 var (
-	DefaultDB = "/Users/shuxian/workspace/go/src/github.com/joincloud/home/.data/finbook.db"
+	DefaultDB = "/Users/shuxian/Projects/joincloud/home-services/finance/.data/finbook.db"
 
 	expenseCreateSQL = `create table IF NOT EXISTS expense
 (

@@ -7,7 +7,7 @@ import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	any "github.com/golang/protobuf/ptypes/any"
-	error1 "github.com/joincloud/home/proto/common/error"
+	error1 "github.com/joincloud/home-services/proto/common/error"
 	math "math"
 )
 

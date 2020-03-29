@@ -1,12 +1,11 @@
-module github.com/joincloud/home/finance
+module github.com/joincloud/home-services/finance
 
 go 1.13
 
-replace github.com/joincloud/home/proto v0.0.0 => /Users/shuxian/workspace/go/src/github.com/joincloud/home/proto
+replace github.com/joincloud/home-services/proto v1.0.0 => /Users/shuxian/Projects/joincloud/home-services/proto
 
 require (
-	github.com/golang/protobuf v1.3.3
+	github.com/golang/protobuf v1.3.5
+	github.com/joincloud/home-services/proto v1.0.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
-	github.com/micro/go-micro/v2 v2.1.0 // indirect
-	github.com/joincloud/home/proto v0.0.0
 )

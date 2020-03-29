@@ -3,8 +3,8 @@ package repository
 import (
 	"sync"
 
-	"github.com/joincloud/home/proto/common/page"
-	"github.com/joincloud/home/proto/finance/book"
+	"github.com/joincloud/home-services/proto/common/page"
+	"github.com/joincloud/home-services/proto/finance/book"
 )
 
 type BookRepository interface {

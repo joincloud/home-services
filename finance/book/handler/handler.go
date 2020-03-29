@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/golang/protobuf/ptypes"
-	"github.com/joincloud/home/finance/book/service"
-	"github.com/joincloud/home/proto/common/response"
-	"github.com/joincloud/home/proto/finance/book"
+	"github.com/joincloud/home-services/finance/book/service"
+	"github.com/joincloud/home-services/proto/common/response"
+	"github.com/joincloud/home-services/proto/finance/book"
 )
 
 type BookHandler struct {

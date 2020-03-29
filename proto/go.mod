@@ -1,4 +1,4 @@
-module github.com/joincloud/home/proto
+module github.com/joincloud/home-services/proto
 
 go 1.13
 
