@@ -1,29 +1,19 @@
 package main
 
 import (
-	"github.com/joincloud/home-services/finance/book"
-	"github.com/joincloud/home-services/finance/book/handler"
-	bProto "github.com/joincloud/home-services/proto/finance/book"
-	"github.com/micro/cli/v2"
+	"github.com/joincloud/home-platform/service"
+	financeCMD "github.com/joincloud/home-services/finance/cmd"
 	"github.com/micro/go-micro/v2"
 )
 
 func main() {
-	s := micro.NewService(
-		micro.Name("home.srv.fin"),
-	)
-
-	s.Init(micro.Action(func(context *cli.Context) error {
-		book.Init()
-		return nil
-	}))
-
-	err := bProto.RegisterBookHandler(s.Server(), new(handler.BookHandler))
-	if err != nil {
-		panic(err)
+	opts := &service.Options{
+		Service: micro.NewService(micro.Name("home.srv.all")),
 	}
 
-	err = s.Run()
+	financeCMD.Init(opts)
+
+	err := opts.Service.Run()
 	if err != nil {
 		panic(err)
 	}

@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	DefaultDB = "/Users/shuxian/Projects/joincloud/home-services/finance/.data/finbook.db"
+	DefaultDB = "/home/sx/Project/go/joincloud/home-services/finance/.data/finbook.db"
 
 	expenseCreateSQL = `create table IF NOT EXISTS expense
 (

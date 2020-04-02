@@ -1,8 +1,9 @@
 module github.com/joincloud/home-services/cmd
 
 replace (
-	github.com/joincloud/home-services/finance v1.0.0 => /Users/shuxian/Projects/joincloud/home-services/finance
-	github.com/joincloud/home-services/proto v1.0.0 => /Users/shuxian/Projects/joincloud/home-services/proto
+	github.com/joincloud/home-services/finance v1.0.0 => /home/sx/Project/go/joincloud/home-services/finance
+	github.com/joincloud/home-services/proto v1.0.0 => /home/sx/Project/go/joincloud/home-services/proto
+	github.com/joincloud/home-platform v1.0.0 =>  /home/sx/Project/go/joincloud/home-platform
 )
 
 go 1.13
@@ -12,4 +13,5 @@ require (
 	github.com/joincloud/home-services/finance v1.0.0
 	github.com/joincloud/home-services/proto v1.0.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
+	github.com/joincloud/home-platform v1.0.0
 )
