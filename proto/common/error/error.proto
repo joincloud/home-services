@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package error;
-
-message Error {
-    string code = 1;
-    string msg = 2;
-}
