@@ -1,0 +1,12 @@
+home:
+  platform:
+    addr:
+  services:
+    node:
+      id: i-am-the-first-node
+      name: i-really-am-the-first-node
+      namespace: sz-home
+      address:
+        protocol: http
+        address: 127.0.0.1:8090
+      version: 1.0
