@@ -1,6 +1,7 @@
 home:
   platform:
-    addr:
+    addr: http://127.0.0.1:8090
+    register-route: /sxdemo/register
   services:
     node:
       id: i-am-the-first-node
@@ -10,3 +11,6 @@ home:
         protocol: http
         address: 127.0.0.1:8090
       version: 1.0
+      metadata:
+        key: hello
+        hi: OK

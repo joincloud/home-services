@@ -2,23 +2,20 @@ package registry
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
-	reg "github.com/joincloud/home-platform/registry"
+	"github.com/joincloud/home-platform/home-services/conf"
 	"io/ioutil"
 	"net/http"
 )
 
 func Register() {
-
-	reg.Register()
-
-	url := "http://restapi3.apiary.io/notes"
-	fmt.Println("URL:>", url)
-
-	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
-	req.Header.Set("X-Custom-Header", "myvalue")
-	req.Header.Set("Content-Type", "application/json")
+	url := conf.Configs.Home.Platform.Addr + conf.Configs.Home.Platform.RegisterRoute
+	nodeJSON, _ := json.Marshal(conf.Configs.Home.Services.Node)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(nodeJSON))
+	if err != nil {
+		panic(err)
+	}
 
 	client := &http.Client{}
 	resp, err := client.Do(req)

@@ -6,11 +6,15 @@ import (
 
 	"github.com/go-yaml/yaml"
 	"github.com/joincloud/home-platform/registry"
-	"github.com/sirupsen/logrus"
+)
+
+var (
+	Configs = &Conf{}
 )
 
 type Platform struct {
-	Addr string `json:"addr" yaml:"addr"`
+	Addr          string `json:"addr" yaml:"addr"`
+	RegisterRoute string `json:"register-route" yaml:"register-route"`
 }
 
 type Services struct {
@@ -38,10 +42,8 @@ func Init(filePath string) {
 		panic(err)
 	}
 
-	home := &Conf{}
-	err = yaml.Unmarshal(b, home)
+	err = yaml.Unmarshal(b, Configs)
 	if err != nil {
 		panic(err)
 	}
-	logrus.Info(home)
 }
