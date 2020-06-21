@@ -1,8 +1,9 @@
-module github.com/joincloud/home-services
+module github.com/joincloud/home-platform/home-services
 
-go 1.14
+go 1.13
 
 require (
-	github.com/joincloud/home-platform/registry v0.0.0-20200615175908-bd7eccaad417 // indirect
-	github.com/joincloud/peers-touch v0.0.0-20200618160025-d01548dc77c6 // indirect
+	github.com/go-yaml/yaml v2.1.0+incompatible
+	github.com/joincloud/home-platform/registry v0.0.0-20200615175908-bd7eccaad417
+	github.com/sirupsen/logrus v1.6.0
 )
