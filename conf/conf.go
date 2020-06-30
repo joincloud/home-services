@@ -10,7 +10,8 @@ import (
 )
 
 var (
-	Configs = &Conf{}
+	Configs        = &Conf{}
+	bootstrapNodes []string
 )
 
 type Platform struct {
@@ -19,7 +20,8 @@ type Platform struct {
 }
 
 type Services struct {
-	Node registry.Node `json:"node" yaml:"node"`
+	Node           registry.Node     `json:"node" yaml:"node"`
+	BootstrapNodes map[string]string `json:"bootstrap-nodes" yaml:"bootstrap-nodes"`
 }
 
 type Home struct {
@@ -60,4 +62,14 @@ func Init(filePath string) {
 	}
 
 	// endregion
+}
+
+func GetBootStrapNodes() []string {
+	if bootstrapNodes == nil {
+		for _, ns := range Configs.Home.Services.BootstrapNodes {
+			bootstrapNodes = append(bootstrapNodes, ns)
+		}
+	}
+
+	return bootstrapNodes
 }

@@ -3,23 +3,24 @@ package node
 import (
 	"context"
 	"fmt"
-	files "github.com/ipfs/go-ipfs-files"
-	peerstore "github.com/libp2p/go-libp2p-peerstore"
-	ma "github.com/multiformats/go-multiaddr"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
 
 	config "github.com/ipfs/go-ipfs-config"
+	files "github.com/ipfs/go-ipfs-files"
 	"github.com/ipfs/go-ipfs/core"
 	"github.com/ipfs/go-ipfs/core/coreapi"
 	"github.com/ipfs/go-ipfs/core/node/libp2p"
 	"github.com/ipfs/go-ipfs/plugin/loader"
 	"github.com/ipfs/go-ipfs/repo/fsrepo"
 	icore "github.com/ipfs/interface-go-ipfs-core"
+	icorepath "github.com/ipfs/interface-go-ipfs-core/path"
 	"github.com/joincloud/home-platform/home-services/conf"
 	"github.com/libp2p/go-libp2p-core/peer"
+	peerstore "github.com/libp2p/go-libp2p-peerstore"
+	ma "github.com/multiformats/go-multiaddr"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -29,8 +30,8 @@ func createRepos(ctx context.Context) {
 		panic(err)
 	}
 
-	files := conf.Configs.Home.Files
-	for s, f := range files {
+	fs := conf.Configs.Home.Files
+	for s, f := range fs {
 		log.Infof("create dir: %s: %s", s, f.Dir)
 		if f.IsTemp {
 			go func() {
@@ -67,8 +68,22 @@ func createRepos(ctx context.Context) {
 			panic(err)
 		}
 
-		// add some files
-		ipfs.Unixfs().Add(ctx, nil)
+		// connectToPeers
+		go connectToPeers(ctx, ipfs, conf.GetBootStrapNodes())
+
+		exampleCIDStr := "QmUaoioqU7bxezBQZkUcgcSyokatMY71sxsALxQmRRrHrj"
+		outputPath := "/Users/shuxian/Projects/joincloud/files/tmp/" + exampleCIDStr
+		testCID := icorepath.New(exampleCIDStr)
+
+		rootNode, err := ipfs.Unixfs().Get(ctx, testCID)
+		if err != nil {
+			panic(fmt.Errorf("Could not get file with CID: %s", err))
+		}
+
+		err = files.WriteTo(rootNode, outputPath)
+		if err != nil {
+			panic(fmt.Errorf("Could not write out the fetched CID: %s", err))
+		}
 	}
 }
 
