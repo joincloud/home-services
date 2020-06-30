@@ -3,8 +3,13 @@ package node
 import (
 	"context"
 	"fmt"
+	files "github.com/ipfs/go-ipfs-files"
+	peerstore "github.com/libp2p/go-libp2p-peerstore"
+	ma "github.com/multiformats/go-multiaddr"
 	"io/ioutil"
+	"os"
 	"path/filepath"
+	"sync"
 
 	config "github.com/ipfs/go-ipfs-config"
 	"github.com/ipfs/go-ipfs/core"
@@ -14,6 +19,7 @@ import (
 	"github.com/ipfs/go-ipfs/repo/fsrepo"
 	icore "github.com/ipfs/interface-go-ipfs-core"
 	"github.com/joincloud/home-platform/home-services/conf"
+	"github.com/libp2p/go-libp2p-core/peer"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -54,11 +60,15 @@ func createRepos(ctx context.Context) {
 			panic(err)
 		}
 
-		_, err = createNode(ctx, repoPath)
+		// begin the node
+		ipfs, err := createNode(ctx, repoPath)
 		if err != nil {
 			// todo error
 			panic(err)
 		}
+
+		// add some files
+		ipfs.Unixfs().Add(ctx, nil)
 	}
 }
 
@@ -103,5 +113,53 @@ func setupPlugins(externalPluginsPath string) error {
 		return fmt.Errorf("error initializing plugins: %s", err)
 	}
 
+	return nil
+}
+
+func getUnixfsNode(path string) (files.Node, error) {
+	st, err := os.Stat(path)
+	if err != nil {
+		return nil, err
+	}
+
+	f, err := files.NewSerialFile(path, false, st)
+	if err != nil {
+		return nil, err
+	}
+
+	return f, nil
+}
+
+func connectToPeers(ctx context.Context, ipfs icore.CoreAPI, peers []string) error {
+	var wg sync.WaitGroup
+	peerInfos := make(map[peer.ID]*peerstore.PeerInfo, len(peers))
+	for _, addrStr := range peers {
+		addr, err := ma.NewMultiaddr(addrStr)
+		if err != nil {
+			return err
+		}
+		pii, err := peerstore.InfoFromP2pAddr(addr)
+		if err != nil {
+			return err
+		}
+		pi, ok := peerInfos[pii.ID]
+		if !ok {
+			pi = &peerstore.PeerInfo{ID: pii.ID}
+			peerInfos[pi.ID] = pi
+		}
+		pi.Addrs = append(pi.Addrs, pii.Addrs...)
+	}
+
+	wg.Add(len(peerInfos))
+	for _, peerInfo := range peerInfos {
+		go func(peerInfo *peerstore.PeerInfo) {
+			defer wg.Done()
+			err := ipfs.Swarm().Connect(ctx, *peerInfo)
+			if err != nil {
+				log.Printf("failed to connect to %s: %s", peerInfo.ID, err)
+			}
+		}(peerInfo)
+	}
+	wg.Wait()
 	return nil
 }

@@ -17,8 +17,10 @@ home:
   files:
     tmp:
       isTmp: true
-      dir: E:\Projects\home\files\tmp
+    #  dir: E:\Projects\home\files\tmp
+      dir: /Users/shuxian/Projects/joincloud/files/tmp
     photo:
       isTmp: false
-      dir: E:\Projects\home\files\photo
+    #  dir: E:\Projects\home\files\photo
+      dir: /Users/shuxian/Projects/joincloud/files/photo
 
