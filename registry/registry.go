@@ -2,6 +2,7 @@ package registry
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,7 +11,7 @@ import (
 	"github.com/joincloud/home-platform/home-services/conf"
 )
 
-func Register() {
+func Register(ctx context.Context) {
 	url := conf.Configs.Home.Platform.Addr + conf.Configs.Home.Platform.RegisterRoute
 	nodeJSON, _ := json.Marshal(conf.Configs.Home.Services.Node)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(nodeJSON))

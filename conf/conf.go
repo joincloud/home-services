@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-yaml/yaml"
 	"github.com/joincloud/home-platform/registry"
+	log "github.com/sirupsen/logrus"
 )
 
 var (
@@ -32,7 +33,8 @@ type Conf struct {
 }
 
 type File struct {
-	Dir string `json:"dir" yaml:"dir"`
+	IsTemp bool   `json:"isTmp" yaml:"isTmp"`
+	Dir    string `json:"dir" yaml:"dir"`
 }
 
 func Init(filePath string) {
@@ -53,7 +55,9 @@ func Init(filePath string) {
 	}
 
 	// region log config
-	Configs.Home.Files
+	for s, f := range Configs.Home.Files {
+		log.Infof("file dir: %s: %s", s, f.Dir)
+	}
 
 	// endregion
 }
