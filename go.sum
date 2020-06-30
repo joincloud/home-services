@@ -1,10 +1,5 @@
-github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/go-yaml/yaml v2.1.0+incompatible h1:RYi2hDdss1u4YE7GwixGzWwVo47T8UQwnTLB6vQiq+o=
-github.com/go-yaml/yaml v2.1.0+incompatible/go.mod h1:w2MrLa16VYP0jy6N7M5kHaCkaLENm+P+Tv+MfurjSw0=
+github.com/joincloud/home-platform v0.0.0-20200615175908-bd7eccaad417 h1:X8bvWHZn4VAll7SFiUOc69cgqxLjWGmYB7lkzWylnF4=
 github.com/joincloud/home-platform/registry v0.0.0-20200615175908-bd7eccaad417 h1:f1+iLzhr2mgl7+EkX6qdBoDcVrJyf8Wr70puq/8qIPI=
 github.com/joincloud/home-platform/registry v0.0.0-20200615175908-bd7eccaad417/go.mod h1:Yn/asOOP2rfcGQ6k/jvCYMf0C3MrFywkE9qJE3gd3G8=
-github.com/konsorten/go-windows-terminal-sequences v1.0.3/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
-github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/sirupsen/logrus v1.6.0/go.mod h1:7uNnSEd1DgxDLC74fIahvMZmmYsHGZGEOFrfsX/uA88=
-github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
-golang.org/x/sys v0.0.0-20190422165155-953cdadca894/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+github.com/joincloud/peers-touch v0.0.0-20200618160025-d01548dc77c6 h1:aRbRpFygPwMQmQx/BJX51opRZIrSsz9knwej8oIkidY=
+github.com/joincloud/peers-touch v0.0.0-20200618160025-d01548dc77c6/go.mod h1:8kx77e6YrBmbFoMTdmHe2fqCb6QvquuX4c/QzpoixrQ=
