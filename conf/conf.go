@@ -22,12 +22,17 @@ type Services struct {
 }
 
 type Home struct {
-	Platform Platform `json:"platform" yaml:"platform"`
-	Services Services `json:"services" yaml:"services"`
+	Platform Platform        `json:"platform" yaml:"platform"`
+	Services Services        `json:"services" yaml:"services"`
+	Files    map[string]File `json:"files" yaml:"files"`
 }
 
 type Conf struct {
 	Home Home `json:"home" yaml:"home"`
+}
+
+type File struct {
+	Dir string `json:"dir" yaml:"dir"`
 }
 
 func Init(filePath string) {
@@ -46,4 +51,9 @@ func Init(filePath string) {
 	if err != nil {
 		panic(err)
 	}
+
+	// region log config
+	Configs.Home.Files
+
+	// endregion
 }

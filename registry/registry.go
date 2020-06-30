@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/joincloud/home-platform/home-services/conf"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/joincloud/home-platform/home-services/conf"
 )
 
 func Register() {

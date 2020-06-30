@@ -14,3 +14,9 @@ home:
       metadata:
         key: hello
         hi: OK
+  files:
+    - tmp:
+        dir: E:\Projects\home\files\tmp
+    - photo:
+        dir: E:\Projects\home\files\photo
+
