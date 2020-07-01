@@ -24,6 +24,10 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var (
+	coreAPI icore.CoreAPI
+)
+
 func createRepos(ctx context.Context) {
 	if err := setupPlugins(""); err != nil {
 		// todo error
