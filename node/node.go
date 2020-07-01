@@ -10,11 +10,12 @@ type Node struct {
 	APIs map[string]API
 }
 
-// One dir one node
+// One dir one API
 type API struct {
-	Name string
-	Dir  string
-	ipfs icore.CoreAPI
+	Name           string
+	Dir            string
+	BootstrapNodes []string
+	ipfs           icore.CoreAPI
 }
 
 func (n *Node) connectToPeers() {
