@@ -25,15 +25,30 @@ import (
 )
 
 var (
-	coreAPI icore.CoreAPI
+	coreAPI  icore.CoreAPI
+	nodesMap map[string]Node = map[string]Node{}
 )
 
-func createRepos(ctx context.Context) {
-	if err := setupPlugins(""); err != nil {
-		// todo error
-		panic(err)
+func initPlugins(ctx context.Context, externalPluginsPath string) error {
+	// Load any external plugins if available on externalPluginsPath
+	plugins, err := loader.NewPluginLoader(filepath.Join(externalPluginsPath, "plugins"))
+	if err != nil {
+		return fmt.Errorf("error loading plugins: %s", err)
 	}
 
+	// Load preloaded and external plugins
+	if err := plugins.Initialize(); err != nil {
+		return fmt.Errorf("error initializing plugins: %s", err)
+	}
+
+	if err := plugins.Inject(); err != nil {
+		return fmt.Errorf("error initializing plugins: %s", err)
+	}
+
+	return nil
+}
+
+func initNode(ctx context.Context) error {
 	fs := conf.Configs.Home.Files
 	for s, f := range fs {
 		log.Infof("create dir: %s: %s", s, f.Dir)
@@ -66,7 +81,7 @@ func createRepos(ctx context.Context) {
 		}
 
 		// begin the node
-		ipfs, err := createNode(ctx, repoPath)
+		ipfs, err := prepareAPI(ctx, repoPath)
 		if err != nil {
 			// todo error
 			panic(err)
@@ -89,9 +104,11 @@ func createRepos(ctx context.Context) {
 			panic(fmt.Errorf("Could not write out the fetched CID: %s", err))
 		}
 	}
+
+	return nil
 }
 
-func createNode(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
+func prepareAPI(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
 	// Open the repo
 	repo, err := fsrepo.Open(repoPath)
 	if err != nil {
@@ -114,25 +131,6 @@ func createNode(ctx context.Context, repoPath string) (icore.CoreAPI, error) {
 
 	// Attach the Core API to the constructed node
 	return coreapi.NewCoreAPI(node)
-}
-
-func setupPlugins(externalPluginsPath string) error {
-	// Load any external plugins if available on externalPluginsPath
-	plugins, err := loader.NewPluginLoader(filepath.Join(externalPluginsPath, "plugins"))
-	if err != nil {
-		return fmt.Errorf("error loading plugins: %s", err)
-	}
-
-	// Load preloaded and external plugins
-	if err := plugins.Initialize(); err != nil {
-		return fmt.Errorf("error initializing plugins: %s", err)
-	}
-
-	if err := plugins.Inject(); err != nil {
-		return fmt.Errorf("error initializing plugins: %s", err)
-	}
-
-	return nil
 }
 
 func getUnixfsNode(path string) (files.Node, error) {
