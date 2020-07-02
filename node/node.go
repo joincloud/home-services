@@ -35,6 +35,7 @@ type API struct {
 }
 
 func (n *Node) init() (err error) {
+	log.Info("init node")
 	err = n.prepareAPIs()
 	if err != nil {
 		return err
@@ -49,6 +50,7 @@ func (n *Node) init() (err error) {
 }
 
 func (n *Node) prepareAPIs() error {
+	log.Info("init node, prepare apis")
 	fs := conf.Configs.Home.Files
 	for k, f := range fs {
 		log.Infof("create dir: %k: %k", k, f.Dir)
