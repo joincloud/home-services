@@ -35,8 +35,9 @@ type Conf struct {
 }
 
 type File struct {
-	IsTemp bool   `json:"isTmp" yaml:"isTmp"`
-	Dir    string `json:"dir" yaml:"dir"`
+	IsTemp         bool              `json:"isTmp" yaml:"isTmp"`
+	Dir            string            `json:"dir" yaml:"dir"`
+	BootstrapNodes map[string]string `json:"bootstrap-nodes" yaml:"bootstrap-nodes"`
 }
 
 func Init(filePath string) {
