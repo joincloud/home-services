@@ -53,7 +53,7 @@ func (n *Node) prepareAPIs() error {
 	log.Info("init node, prepare apis")
 	fs := conf.Configs.Home.Files
 	for k, f := range fs {
-		log.Infof("create dir: %k: %k", k, f.Dir)
+		log.Infof("create dir: %s: %s", k, f.Dir)
 		if f.IsTemp {
 			go func() {
 				select {
@@ -138,7 +138,10 @@ func (n *Node) connectToPeers() error {
 }
 
 func prepareNode(ctx context.Context) {
-	node = &Node{ctx: ctx}
+	node = &Node{
+		ctx:  ctx,
+		APIs: map[string]*API{},
+	}
 
 	if err := node.init(); err != nil {
 		// todo error

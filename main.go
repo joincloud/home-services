@@ -11,7 +11,9 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	conf.Init("/Users/shuxian/Projects/joincloud/home-services/application.yml")
+	conf.Init("E:\\GOPATH\\src\\github.com\\printfcoder\\home-services\\application.yml")
 	node.Init(ctx)
 	registry.Register(ctx)
+
+	node.GetWriteTo(ctx, "tmp", "QmUaoioqU7bxezBQZkUcgcSyokatMY71sxsALxQmRRrHrj", "E:\\Projects\\home\\files\\save\\hello.txt")
 }
