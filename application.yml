@@ -33,7 +33,7 @@ home:
   files:
     tmp:
       isTmp: true
-      dir: E:\Projects\home\files\tmp
+      dir: /home/sx/Project/home/files/tmp
       #dir: /Users/shuxian/Projects/joincloud/files/tmp
       bootstrap-peers:
         1: /dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN
@@ -51,7 +51,8 @@ home:
         12: /ip4/94.130.135.167/udp/4001/quic/p2p/QmUEMvxS2e7iDrereVYc5SWPauXPyNwxcy9BXZrC1QTcHE
     photo:
       isTmp: false
-      dir: E:\Projects\home\files\photo
+      disabled: true
+      dir: /home/sx/Project/home/files/photo
       #dir: /Users/shuxian/Projects/joincloud/files/photo
       bootstrap-peers:
         1: /dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN
