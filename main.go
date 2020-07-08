@@ -6,7 +6,6 @@ import (
 	"github.com/joincloud/home-platform/home-services/conf"
 	"github.com/joincloud/home-platform/home-services/node"
 	"github.com/joincloud/home-platform/home-services/registry"
-	log "github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -17,10 +16,8 @@ func main() {
 	node.Init(ctx)
 	registry.Register(ctx)
 
-	addrs, err := node.GetNodeAddrs(ctx, "tmp")
+	err := node.GetWriteTo(ctx, "tmp", "QmUaoioqU7bxezBQZkUcgcSyokatMY71sxsALxQmRRrHrj", "/home/sx/Project/home/files/dir/hello")
 	if err != nil {
-		log.Error(err)
+		panic(err)
 	}
-
-	log.Info(addrs)
 }
