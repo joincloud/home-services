@@ -3,6 +3,7 @@ package node
 import (
 	"context"
 	"io/ioutil"
+	"os"
 	"sync"
 
 	config "github.com/ipfs/go-ipfs-config"
@@ -53,7 +54,12 @@ func (n *Node) prepareAPIs() error {
 	log.Info("init node, prepare apis")
 	fs := conf.Configs.Home.Files
 	for k, f := range fs {
-		log.Infof("create dir: %s: %s", k, f.Dir)
+		log.Infof("check or create dir: %s: %s", k, f.Dir)
+		if f.Disabled {
+			log.Infof("dir is disabled: %s: %s", k, f.Dir)
+			continue
+		}
+
 		if f.IsTemp {
 			go func() {
 				select {
@@ -63,10 +69,14 @@ func (n *Node) prepareAPIs() error {
 			}()
 		}
 
-		repoPath, err := ioutil.TempDir(f.Dir, "ipfs-shell")
-		if err != nil {
-			// todo error
-			panic(err)
+		// check repo is existed
+		if _, err := ioutil.ReadDir(f.Dir); err == os.ErrNotExist {
+			log.Infof("repo [%s] is not existed, now create it", f.Dir)
+			err := os.Mkdir(f.Dir, os.ModeDir)
+			if err != nil {
+				// todo error
+				panic(err)
+			}
 		}
 
 		// Create a config with default options and a 2048 bit key
@@ -76,18 +86,19 @@ func (n *Node) prepareAPIs() error {
 			panic(err)
 		}
 
-		err = fsrepo.Init(repoPath, cfg)
+		err = fsrepo.Init(f.Dir, cfg)
 		if err != nil {
 			// todo error
 			panic(err)
 		}
 
-		ipfs, err := prepareAPI(n.ctx, repoPath)
+		ipfs, err := prepareAPI(n.ctx, f.Dir)
 		if err != nil {
 			// todo error
 			panic(err)
 		}
 
+		log.Infof("API: %s: %s, isTemp: %t, peerNodes: %s", k, f.Dir, f.IsTemp, f.BootstrapNodes)
 		node.APIs[k] = &API{
 			Name:           k,
 			Dir:            f.Dir,
@@ -101,10 +112,12 @@ func (n *Node) prepareAPIs() error {
 }
 
 func (n *Node) connectToPeers() error {
+	log.Infof("node connect to peers")
 	var wg sync.WaitGroup
 	for _, api := range n.APIs {
 		peerInfos := make(map[peer.ID]*peer.AddrInfo, len(api.BootstrapPeers))
 		for _, bootsPeer := range api.BootstrapPeers {
+			log.Infof("prepare peer %s", bootsPeer)
 			addr, err := ma.NewMultiaddr(bootsPeer)
 			if err != nil {
 				return err
@@ -125,6 +138,7 @@ func (n *Node) connectToPeers() error {
 		for _, peerInfo := range peerInfos {
 			go func(peerInfo *peer.AddrInfo) {
 				defer wg.Done()
+				log.Infof("prepare connect peer %s", peerInfo.ID)
 				err := api.ipfs.Swarm().Connect(n.ctx, *peerInfo)
 				if err != nil {
 					log.Errorf("failed to connect to %s: %s", peerInfo.ID, err)
